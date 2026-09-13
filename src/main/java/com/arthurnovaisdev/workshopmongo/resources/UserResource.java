@@ -1,6 +1,7 @@
 package com.arthurnovaisdev.workshopmongo.resources;
 
 import com.arthurnovaisdev.workshopmongo.domain.User;
+import com.arthurnovaisdev.workshopmongo.dto.UserDTO;
 import com.arthurnovaisdev.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,9 @@ public class UserResource {
     private UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserDTO>> findAll() {
         List<User> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+        List<UserDTO> listDto = list.stream().map(UserDTO::new).toList();
+        return ResponseEntity.ok().body(listDto);
     }
 }
